@@ -1,0 +1,28 @@
+# Tested on Deeptest release 1.9.0
+buildCmd: 'cd moshi && mvn compile'
+testCmd: 'cd moshi && mvn test'
+cbmcArguments:
+  classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+  cover-function-only: false
+  do-not-test-methods-with-access: [ private ]
+  depth: false
+  java-external-code-action: 'mock-non-jdk'
+phases:
+-
+  timeout: 300
+  cbmcArguments:
+    java-assume-inputs-non-null: true
+    max-nondet-array-length: 10
+    string-non-empty: true
+    unwind: 1
+-
+  timeout: 300
+  cbmcArguments:
+    max-nondet-array-length: 20
+    unwind: 2
+-
+  timeout: 300
+  cbmcArguments:
+    max-nondet-array-length: 30
+    max-nondet-string-length: 10
+    unwind: 3
